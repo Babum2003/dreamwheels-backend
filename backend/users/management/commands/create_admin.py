@@ -5,11 +5,14 @@ import os
 class Command(BaseCommand):
     def handle(self, *args, **kwargs):
         User = get_user_model()
-        username = os.getenv('ADMIN_USERNAME', 'admin')
-        password = os.getenv('ADMIN_PASSWORD', 'Admin@123')
         email = os.getenv('ADMIN_EMAIL', 'admin@sakthibalancars.com')
-        if not User.objects.filter(username=username).exists():
-            User.objects.create_superuser(username=username, email=email, password=password)
+        password = os.getenv('ADMIN_PASSWORD', 'Admin@123')
+        name = os.getenv('ADMIN_USERNAME', 'admin')
+        if not User.objects.filter(email=email).exists():
+            user = User.objects.create_superuser(email=email, password=password)
+            user.name = name
+            user.is_admin = True
+            user.save()
             self.stdout.write('Admin created!')
         else:
             self.stdout.write('Admin already exists!')
