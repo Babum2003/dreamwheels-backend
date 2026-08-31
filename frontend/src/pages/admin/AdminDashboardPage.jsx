@@ -51,7 +51,7 @@ export default function AdminDashboardPage() {
       }}>
         <div>
           <div style={{ color: "white", fontWeight: "800", fontSize: "1rem" }}>
-            🚗 Sakthi Balan
+            🚗 carkart
           </div>
           <div style={{ color: "rgba(255,255,255,0.4)", fontSize: "0.75rem" }}>
             Admin Panel
@@ -165,7 +165,7 @@ export default function AdminDashboardPage() {
             <span style={{ fontSize: "1.3rem" }}>🚗</span>
             <div>
               <div style={{ color: "white", fontWeight: "800", fontSize: "0.9rem", lineHeight: 1.1 }}>
-                Sakthi Balan
+                carkart
               </div>
               <div style={{ color: "rgba(255,255,255,0.4)", fontSize: "0.6rem" }}>Admin Panel</div>
             </div>

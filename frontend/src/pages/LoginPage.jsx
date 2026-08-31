@@ -65,7 +65,7 @@ export default function LoginPage() {
         <div style={{ textAlign: "center", marginBottom: "32px" }}>
           <div style={{ fontSize: "3rem", marginBottom: "8px" }}>🚗</div>
           <h1 style={{ color: "white", fontSize: "1.5rem", fontWeight: "800" }}>
-            Sakthi Balan Cars
+            carkart
           </h1>
           <p style={{ color: "rgba(255,255,255,0.5)", marginTop: "4px" }}>
             Arni, Tamil Nadu

@@ -45,7 +45,7 @@ export default function Navbar() {
               background: "linear-gradient(135deg, #ffffff, #a78bfa, #60a5fa)",
               WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent"
             }}>
-              Sakthi Balan Cars
+              carkart
             </div>
             <div style={{
               fontSize: "0.62rem", fontWeight: "600", letterSpacing: "1.5px",

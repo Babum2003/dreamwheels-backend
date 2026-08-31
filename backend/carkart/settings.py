@@ -44,7 +44,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'sakthibalan.urls'
+ROOT_URLCONF = 'carkart.urls'
 
 TEMPLATES = [
     {
@@ -62,7 +62,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'sakthibalan.wsgi.application'
+WSGI_APPLICATION = 'carkart.wsgi.application'
 
 # PostgreSQL Database
 import dj_database_url
@@ -76,7 +76,7 @@ else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
-            'NAME': os.getenv('DB_NAME', 'sakthibalan_db'),
+            'NAME': os.getenv('DB_NAME', 'carkart_db'),
             'USER': os.getenv('DB_USER', 'postgres'),
             'PASSWORD': os.getenv('DB_PASSWORD', ''),
             'HOST': os.getenv('DB_HOST', 'localhost'),
@@ -107,7 +107,7 @@ AUTH_USER_MODEL = 'users.CustomUser'
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
-    "https://sakthibalancars.onrender.com",
+    "https://carkart.onrender.com",
 ]
 CORS_ALLOW_CREDENTIALS = True
 

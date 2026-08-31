@@ -274,7 +274,7 @@ export default function HomePage() {
               color: "rgba(255,255,255,0.6)",
               maxWidth: "480px", margin: "0 auto", lineHeight: "1.6"
             }}>
-              Welcome To Sakthi Balan Cars — Your Trusted Destination for Quality Used Cars in ARNI, Tamil Nadu
+              Welcome To carkart — Your Trusted Destination for Quality Used Cars in ARNI, Tamil Nadu
             </p>
           </motion.div>
 
