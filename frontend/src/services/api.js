@@ -1,40 +1,42 @@
 import axios from 'axios';
 
 const API = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL,
+  baseURL: `${import.meta.env.VITE_API_BASE_URL}/api`,
   headers: {
     'Content-Type': 'application/json',
   },
 });
 
-// ✅ Request interceptor — route-based token selection (SINGLE interceptor only)
+// Add the correct token to requests
 API.interceptors.request.use((config) => {
   const isAdminCall =
     config.url?.includes('/analytics/') ||
-    config.url?.includes('/cars/create') ||
+    config.url?.includes('/cars/create/') ||
     config.url?.includes('/update/') ||
     config.url?.includes('/delete/') ||
     config.url?.includes('/mark-sold/') ||
-    config.url?.includes('/admin-login/');
+    config.url?.includes('/admin-login/') ||
+    config.url?.includes('/toggle-contacted/');
 
   const adminToken = localStorage.getItem('adminToken');
   const userToken = localStorage.getItem('token');
 
-  // Admin routes → admin token | User routes → user token
   const token = isAdminCall ? adminToken : userToken;
 
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
+
   return config;
 });
 
-// ✅ Response interceptor — 401 handle
+// Handle unauthorized requests
 API.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
       const isAdminRoute = window.location.pathname.startsWith('/admin');
+
       if (isAdminRoute) {
         localStorage.removeItem('adminToken');
         localStorage.removeItem('adminRefresh');
@@ -45,11 +47,12 @@ API.interceptors.response.use(
         window.location.href = '/login';
       }
     }
+
     return Promise.reject(error);
   }
 );
 
-// ✅ Auth APIs
+// Authentication APIs
 export const authAPI = {
   login: (data) => API.post('/users/login/', data),
   logout: () => API.post('/users/logout/'),
@@ -57,7 +60,7 @@ export const authAPI = {
   adminLogin: (data) => API.post('/users/admin-login/', data),
 };
 
-// ✅ Cars APIs
+// Cars APIs
 export const carsAPI = {
   getAll: (params) => API.get('/cars/', { params }),
   getById: (id) => API.get(`/cars/${id}/`),
@@ -67,22 +70,38 @@ export const carsAPI = {
   markSold: (id) => API.patch(`/cars/${id}/mark-sold/`, {}),
 };
 
-// ✅ Favourites APIs
+// Favourites APIs
 export const favouritesAPI = {
   getAll: () => API.get('/favourites/'),
-  toggle: (carId) => API.post('/favourites/toggle/', { car_id: carId }),
+  toggle: (carId) => API.post('/favourites/toggle/', {
+    car_id: carId,
+  }),
 };
 
-// ✅ Admin APIs
+// Admin APIs
 export const adminAPI = {
   createCar: (data) => API.post('/cars/create/', data),
-  updateCar: (id, data) => API.patch(`/cars/${id}/update/`, data),
-  deleteCar: (id) => API.delete(`/cars/${id}/delete/`),
-  markSold: (id) => API.patch(`/cars/${id}/mark-sold/`, {}),
-  getUsers: () => API.get('/analytics/users/'),
-  getAnalytics: () => API.get('/analytics/'),
-  toggleContacted: (userId) => API.patch(`/users/toggle-contacted/${userId}/`),
-  getUserFavourites: (userId) => API.get(`/analytics/user-favourites/${userId}/`),
+
+  updateCar: (id, data) =>
+    API.patch(`/cars/${id}/update/`, data),
+
+  deleteCar: (id) =>
+    API.delete(`/cars/${id}/delete/`),
+
+  markSold: (id) =>
+    API.patch(`/cars/${id}/mark-sold/`, {}),
+
+  getUsers: () =>
+    API.get('/analytics/users/'),
+
+  getAnalytics: () =>
+    API.get('/analytics/'),
+
+  toggleContacted: (userId) =>
+    API.patch(`/users/toggle-contacted/${userId}/`),
+
+  getUserFavourites: (userId) =>
+    API.get(`/analytics/user-favourites/${userId}/`),
 };
 
 export default API;
